@@ -1,0 +1,27 @@
+<h2 class="text-center mt-4"> Listing Topics </h2>
+<% if @topics.length > 0 %>
+    <table class="table table-bordered mt-2">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+
+        <% @topics.each do |topic| %>
+            <tr>
+                <td><%= topic.title %></td>
+                <td><%= topic.description %></td>
+                <td>
+                    <%= pluralize(topic.votes.count, "vote") %>  
+                    <%= link_to "+1", upvote_topic_path(topic), method: :post, class: "btn btn-warning" %>
+                    <%= link_to "Preview", topic_path(topic), class: "btn btn-primary" %>
+                    <%= link_to "Edit", edit_topic_path(topic), class: "btn btn-secondary"%>
+                    <%= link_to "Delete", topic_path(topic), method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"} %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+<% else %>
+    <h3> There is no data </h3>
+<% end %>
+<%= link_to "New Topic", new_topic_path %>
